@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  height: 100%;
+  background-color: #000a19;
+  color: #fff;
+}
+
+img {
+  width: 100%;
+}
