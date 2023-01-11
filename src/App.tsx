@@ -1,12 +1,19 @@
 import React from 'react';
-import world from './Images/world.jpg';
+import Header from './Header/Header';
+import { Route, Link } from 'react-router-dom';
 import './App.css';
+import Cities from './Cities/Cities';
 
 function App(): any {
-  return;
-  <>
-    <div></div>
-  </>;
+  return (
+    <>
+      <Header />
+      <Route path="/"></Route>
+      <Route path="/cities">
+        <Cities />
+      </Route>
+    </>
+  );
 }
 
 export default App;
