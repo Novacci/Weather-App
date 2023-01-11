@@ -3,13 +3,10 @@ import world from './Images/world.jpg';
 import './App.css';
 
 function App(): any {
-  return (
-    <>
-      <div>
-        <img src={world} />
-      </div>
-    </>
-  );
+  return;
+  <>
+    <div></div>
+  </>;
 }
 
 export default App;

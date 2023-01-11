@@ -3,12 +3,15 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
-  height: 100%;
+  background-image: url(./Images/world.jpg);
+  background-size: cover;
+  position: relative;
+
+  background-repeat: no-repeat;
+  height: 100vh;
+
   background-color: #000a19;
   color: #fff;
-}
-
-img {
-  width: 100%;
 }
