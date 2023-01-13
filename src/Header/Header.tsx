@@ -8,11 +8,7 @@ import { AiOutlinePlusCircle } from 'react-icons/ai';
 const Header = () => {
   return (
     <div>
-      <h2 className={classes.h2}>Warszawa</h2>
-
-      <Link to={'/cities'} className={classes.icon}>
-        <AiOutlinePlusCircle />
-      </Link>
+      <h2 className={classes.h2}>Poznań</h2>
     </div>
   );
 };
