@@ -2,17 +2,15 @@ import React from 'react';
 import { BiArrowBack } from 'react-icons/bi';
 import classes from './Cities.module.css';
 import { Link } from 'react-router-dom';
+import Card from '../Card/Card';
 
 const Cities = () => {
   return (
     <div className={classes.cities}>
-      <Link to={'/'}>
+      <Link to={'/'} className={classes.icon}>
         <BiArrowBack />
       </Link>
-      <ul>
-        <li>Porucznik</li>
-        <li>Borewicz</li>
-      </ul>
+      <Card />
     </div>
   );
 };

@@ -1,5 +1,8 @@
 .icon {
   display: flex;
   justify-content: center;
-  font-size: 35px;
+
+  width: 100%;
+  font-size: 2em;
+  color: white;
 }

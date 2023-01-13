@@ -5,5 +5,7 @@ h2 {
 .icon {
   display: flex;
   justify-content: center;
-  font-size: 35px;
+  font-size: 2em;
+  width: 100%;
+  color: white;
 }
