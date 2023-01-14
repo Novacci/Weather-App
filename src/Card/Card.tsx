@@ -6,9 +6,11 @@ import { FaSearchLocation } from 'react-icons/fa';
 const Card = () => {
   const [enteredCity, setEnteredCity] = useState('');
   const [cities, setCities] = useState<string[]>([]);
+  const [isTouched, setIsTouched] = useState(true);
 
   const cityInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEnteredCity(event.target.value);
+    setIsTouched(false);
   };
 
   const addCityHandler = () => {
@@ -34,20 +36,26 @@ const Card = () => {
           placeholder="Example: Warsaw"
           value={enteredCity}
         ></input>
-        <button onClick={addCityHandler} className={styles.icon}>
+        <button
+          disabled={isTouched}
+          onClick={addCityHandler}
+          className={styles.icon}
+        >
           <FaSearchLocation />
         </button>
         <div className={styles.position}>
           {cities.map((city, index) => (
-            <ul key={index} className={styles.position}>
-              <li className={styles.item}>{city}</li>
+            <div className={styles.position}>
+              <li key={index} className={styles.item}>
+                {city}
+              </li>
               <button
                 onClick={() => removeCityHandler(index)}
                 className={styles.icon}
               >
                 <BsTrashFill />
               </button>
-            </ul>
+            </div>
           ))}
         </div>
       </div>
