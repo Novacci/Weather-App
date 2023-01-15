@@ -1,4 +1,4 @@
-import react, { useState, ChangeEvent } from 'react';
+import react, { useState, ChangeEvent, useEffect } from 'react';
 import styles from './Card.module.css';
 import { BsTrashFill } from 'react-icons/bs';
 import { FaSearchLocation } from 'react-icons/fa';
@@ -6,17 +6,36 @@ import { FaSearchLocation } from 'react-icons/fa';
 const Card = () => {
   const [enteredCity, setEnteredCity] = useState('');
   const [cities, setCities] = useState<string[]>([]);
-  const [isTouched, setIsTouched] = useState(true);
+  // const [valid, setValid] = useState(true);
+
+  useEffect(() => {
+    const cities = localStorage.getItem('cities');
+    if (cities) {
+      setCities(JSON.parse(cities));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('cities', JSON.stringify(cities));
+  }, [cities]);
+
+  const inputIsValidCondition = enteredCity.trim() !== '';
+
+  let inputIsValid = false;
+
+  if (inputIsValidCondition) {
+    inputIsValid = true;
+  }
 
   const cityInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEnteredCity(event.target.value);
-    setIsTouched(false);
   };
 
   const addCityHandler = () => {
     setCities((prevCities) => {
-      return [enteredCity, ...prevCities];
+      return [...prevCities, enteredCity];
     });
+
     setEnteredCity('');
   };
 
@@ -29,15 +48,20 @@ const Card = () => {
   return (
     <div>
       <h2>Manage Cities</h2>
+
       <div className={styles.searchCity}>
         <input
+          className={`${
+            !inputIsValid ? styles.inputIsNotValid : styles.inputIsValid
+          }`}
           onChange={cityInputHandler}
           type="text"
           placeholder="Example: Warsaw"
           value={enteredCity}
         ></input>
+
         <button
-          disabled={isTouched}
+          disabled={!inputIsValid}
           onClick={addCityHandler}
           className={styles.icon}
         >
@@ -46,9 +70,10 @@ const Card = () => {
         <div className={styles.position}>
           {cities.map((city, index) => (
             <div className={styles.position}>
-              <li key={index} className={styles.item}>
+              <span key={index} className={styles.item}>
                 {city}
-              </li>
+              </span>
+
               <button
                 onClick={() => removeCityHandler(index)}
                 className={styles.icon}
@@ -62,5 +87,9 @@ const Card = () => {
     </div>
   );
 };
+
+// ${
+//   !inputIsValid ? 'styles.inputIsNotValid' : 'styles.inputIsValid'
+// }`}
 
 export default Card;
