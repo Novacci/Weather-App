@@ -7,11 +7,21 @@
   width: 150px;
   height: 150px;
 }
-
+h2 {
+  margin-top: 120px;
+  margin-left: 70px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 50%;
+}
 .position {
   display: flex;
   align-content: center;
   justify-content: center;
+
+  flex-direction: column;
 }
 
 span {
@@ -38,6 +48,12 @@ input {
   background: transparent;
   border: 0;
 }
+.searchIcon {
+  font-size: 20px;
+  color: white;
+  background: transparent;
+  border: 0;
+}
 
 .searchCity {
   display: flex;
@@ -50,13 +66,12 @@ input {
   border-style: solid;
   border-color: #ff0000;
   border-width: 1px;
-
   background-color: #ffdede;
 }
 .inputIsValid {
   box-shadow: 0px 0px 5px 0px rgba(42, 42, 42, 0.75);
   border-style: solid;
-  border-color: #00ff08;
+  border-color: #000000;
   border-width: 1px;
-  background-color: #afffa4;
+  background-color: #ffffff;
 }

@@ -1,8 +1,14 @@
 .icon {
-  display: flex;
-  justify-content: center;
+  margin-left: 470px;
 
   width: 100%;
   font-size: 2em;
   color: white;
+}
+
+.arrow {
+  font-size: 20px;
+  color: white;
+  background: transparent;
+  border: 0;
 }

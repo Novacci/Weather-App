@@ -1,4 +1,4 @@
-import react, { useState, ChangeEvent, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Card.module.css';
 import { BsTrashFill } from 'react-icons/bs';
 import { FaSearchLocation } from 'react-icons/fa';
@@ -6,7 +6,11 @@ import { FaSearchLocation } from 'react-icons/fa';
 const Card = () => {
   const [enteredCity, setEnteredCity] = useState('');
   const [cities, setCities] = useState<string[]>([]);
-  // const [valid, setValid] = useState(true);
+  const [isValid, setIsValid] = useState(true);
+
+  // useEffect(() => {
+  //   validationChecker();
+  // }, []);
 
   useEffect(() => {
     const cities = localStorage.getItem('cities');
@@ -19,23 +23,16 @@ const Card = () => {
     localStorage.setItem('cities', JSON.stringify(cities));
   }, [cities]);
 
-  const inputIsValidCondition = enteredCity.trim() !== '';
-
-  let inputIsValid = false;
-
-  if (inputIsValidCondition) {
-    inputIsValid = true;
-  }
-
   const cityInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEnteredCity(event.target.value);
+    setIsValid(true);
   };
 
   const addCityHandler = () => {
+    validationChecker();
     setCities((prevCities) => {
       return [...prevCities, enteredCity];
     });
-
     setEnteredCity('');
   };
 
@@ -45,6 +42,12 @@ const Card = () => {
     });
   };
 
+  const validationChecker = () => {
+    if (enteredCity.trim() === '') {
+      setIsValid(false);
+    }
+  };
+
   return (
     <div>
       <h2>Manage Cities</h2>
@@ -52,7 +55,7 @@ const Card = () => {
       <div className={styles.searchCity}>
         <input
           className={`${
-            !inputIsValid ? styles.inputIsNotValid : styles.inputIsValid
+            !isValid ? styles.inputIsNotValid : styles.inputIsValid
           }`}
           onChange={cityInputHandler}
           type="text"
@@ -61,35 +64,33 @@ const Card = () => {
         ></input>
 
         <button
-          disabled={!inputIsValid}
+          disabled={!isValid}
           onClick={addCityHandler}
-          className={styles.icon}
+          className={styles.searchIcon}
         >
           <FaSearchLocation />
         </button>
-        <div className={styles.position}>
-          {cities.map((city, index) => (
-            <div className={styles.position}>
-              <span key={index} className={styles.item}>
-                {city}
-              </span>
+        <div>
+          <div className={styles.position}>
+            {cities.map((city, index) => (
+              <div className={styles.position}>
+                <span key={index} className={styles.item}>
+                  {city}
+                </span>
 
-              <button
-                onClick={() => removeCityHandler(index)}
-                className={styles.icon}
-              >
-                <BsTrashFill />
-              </button>
-            </div>
-          ))}
+                <button
+                  onClick={() => removeCityHandler(index)}
+                  className={styles.icon}
+                >
+                  <BsTrashFill />
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 };
-
-// ${
-//   !inputIsValid ? 'styles.inputIsNotValid' : 'styles.inputIsValid'
-// }`}
 
 export default Card;
