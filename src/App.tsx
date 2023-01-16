@@ -5,6 +5,7 @@ import Cities from './Cities/Cities';
 import Borewicz from './Card/Borewicz';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import styles from './App.module.css';
+import Card from './Card/Card';
 
 function App(): any {
   return (
@@ -15,7 +16,7 @@ function App(): any {
         </Link>
       </Route>
       <Route path="/cities">
-        <Cities />
+        <Card />
       </Route>
     </>
   );

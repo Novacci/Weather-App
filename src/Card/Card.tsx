@@ -2,15 +2,13 @@ import { useState, useEffect } from 'react';
 import styles from './Card.module.css';
 import { BsTrashFill } from 'react-icons/bs';
 import { FaSearchLocation } from 'react-icons/fa';
+import { BiArrowBack } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 
 const Card = () => {
   const [enteredCity, setEnteredCity] = useState('');
   const [cities, setCities] = useState<string[]>([]);
   const [isValid, setIsValid] = useState(true);
-
-  // useEffect(() => {
-  //   validationChecker();
-  // }, []);
 
   useEffect(() => {
     const cities = localStorage.getItem('cities');
@@ -29,7 +27,10 @@ const Card = () => {
   };
 
   const addCityHandler = () => {
-    validationChecker();
+    if (enteredCity.trim() === '') {
+      setIsValid(false);
+      return;
+    }
     setCities((prevCities) => {
       return [...prevCities, enteredCity];
     });
@@ -42,50 +43,50 @@ const Card = () => {
     });
   };
 
-  const validationChecker = () => {
-    if (enteredCity.trim() === '') {
-      setIsValid(false);
-    }
-  };
-
   return (
-    <div>
+    <div className={styles.center}>
+      <Link to={'/'} className={styles.icon}>
+        <BiArrowBack />
+      </Link>
       <h2>Manage Cities</h2>
 
       <div className={styles.searchCity}>
-        <input
-          className={`${
-            !isValid ? styles.inputIsNotValid : styles.inputIsValid
-          }`}
-          onChange={cityInputHandler}
-          type="text"
-          placeholder="Example: Warsaw"
-          value={enteredCity}
-        ></input>
+        <div className={styles.citiesList}>
+          <div className={styles.searchPosition}>
+            <input
+              className={`${
+                !isValid ? styles.inputIsNotValid : styles.inputIsValid
+              }`}
+              onChange={cityInputHandler}
+              type="text"
+              placeholder="Example: Warsaw"
+              value={enteredCity}
+            ></input>
+            <button
+              disabled={!isValid}
+              onClick={addCityHandler}
+              className={styles.searchIcon}
+            >
+              <FaSearchLocation />
+            </button>
+          </div>
+          <div>
+            <div className={styles.citiesPosition}>
+              {cities.map((city, index) => (
+                <div className={styles.position}>
+                  <span key={index} className={styles.item}>
+                    {city}
+                  </span>
 
-        <button
-          disabled={!isValid}
-          onClick={addCityHandler}
-          className={styles.searchIcon}
-        >
-          <FaSearchLocation />
-        </button>
-        <div>
-          <div className={styles.position}>
-            {cities.map((city, index) => (
-              <div className={styles.position}>
-                <span key={index} className={styles.item}>
-                  {city}
-                </span>
-
-                <button
-                  onClick={() => removeCityHandler(index)}
-                  className={styles.icon}
-                >
-                  <BsTrashFill />
-                </button>
-              </div>
-            ))}
+                  <button
+                    onClick={() => removeCityHandler(index)}
+                    className={styles.trashIcon}
+                  >
+                    <BsTrashFill />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

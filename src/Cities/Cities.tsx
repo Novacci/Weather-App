@@ -6,11 +6,13 @@ import Card from '../Card/Card';
 
 const Cities = () => {
   return (
-    <div className={classes.cities}>
-      <Link to={'/'} className={classes.icon}>
-        <BiArrowBack />
-      </Link>
-      <Card />
+    <div className={classes.position}>
+      <div className={classes.cities}>
+        <Link to={'/'} className={classes.icon}>
+          <BiArrowBack />
+        </Link>
+        <Card />
+      </div>
     </div>
   );
 };
