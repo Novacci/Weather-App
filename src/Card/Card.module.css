@@ -7,14 +7,12 @@
   width: 800px;
   height: 100px;
 }
+.center {
+  margin-top: 200px;
+}
 
 h2 {
-  /* margin-left: 500px; */
-  margin-bottom: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
+  margin-left: 300px;
 }
 
 .position {
@@ -42,10 +40,8 @@ input {
   border-radius: 10px;
 }
 
-.icon {
-  margin-left: 470px;
-  padding-bottom: 100px;
-  width: 100%;
+.arrowIcon {
+  margin-left: 550px;
   font-size: 2em;
   color: white;
 }
@@ -77,10 +73,6 @@ input {
   background-color: #ffffff;
 }
 
-.center {
-  margin-top: 200px;
-}
-
 .trashIcon {
   font-size: 20px;
   color: white;
@@ -99,5 +91,12 @@ input {
 .citiesPosition {
   display: flex;
   gap: 15px;
+  flex-direction: column;
+}
+
+.headerPosition {
+  width: 50%;
+  display: flex;
+  justify-content: center;
   flex-direction: column;
 }

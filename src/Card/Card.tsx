@@ -45,10 +45,12 @@ const Card = () => {
 
   return (
     <div className={styles.center}>
-      <Link to={'/'} className={styles.icon}>
-        <BiArrowBack />
-      </Link>
-      <h2>Manage Cities</h2>
+      <div className={styles.headerPosition}>
+        <Link to={'/'} className={styles.arrowIcon}>
+          <BiArrowBack />
+        </Link>
+        <h2>Manage Cities</h2>
+      </div>
 
       <div className={styles.searchCity}>
         <div className={styles.citiesList}>
