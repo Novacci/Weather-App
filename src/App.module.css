@@ -8,22 +8,8 @@ body {
   background-image: url(./Images/world.jpg);
   background-size: cover;
   position: relative;
-
   background-repeat: no-repeat;
   height: 100vh;
-
   background-color: #000a19;
   color: #fff;
-}
-
-h2 {
-  justify-content: center;
-  text-align: center;
-}
-.icon {
-  display: flex;
-  justify-content: center;
-  font-size: 2em;
-  width: 100%;
-  color: white;
 }

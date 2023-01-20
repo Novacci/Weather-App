@@ -1,0 +1,219 @@
+.addInfo {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px 0;
+  border-top: 1px solid #1e84f6;
+}
+
+.h2style {
+  position: relative;
+  font-size: 140px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+.h3style {
+  font-size: 25px;
+  font-weight: 300;
+  display: block;
+
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+.h6style {
+  color: #71b4fa;
+  padding-bottom: 20px;
+}
+.tempText {
+  position: absolute;
+  top: 15px;
+  font-size: 30px;
+  color: #71b4fa;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+}
+.contentBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tempBox {
+  text-align: center;
+}
+
+.content {
+  position: relative;
+  background: rgb(16, 106, 243);
+  background: linear-gradient(
+    0deg,
+    rgba(16, 106, 243, 1) 0%,
+    rgb(3, 124, 180) 82%
+  );
+  padding-top: 90px;
+  border-bottom: 1px solid #2c97ec;
+  border-radius: 0 0 50px 50px;
+  color: #fff;
+}
+
+.insideNavbar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 20px 30px;
+  max-width: 560px;
+  margin: 0 auto;
+  font-size: 25px;
+  color: #fff;
+}
+
+.icon {
+  font-size: 1em;
+  color: white;
+}
+
+body {
+  background-image: linear-gradient(
+      rgba(22, 28, 45, 0.75),
+      rgba(22, 28, 45, 0.75)
+    ),
+    url(../Images/world.jpg);
+
+  background-size: cover;
+  position: relative;
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-color: #000a19;
+  color: #fff;
+}
+
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.iconContent {
+  color: #76b4f7;
+}
+
+@media (min-width: 576px) {
+  .boxSize {
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .boxSize {
+    min-width: 700px;
+    max-width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .boxSize {
+    min-width: 980px;
+  }
+}
+
+@media (min-width: 768px) {
+  .navbar {
+    position: relative;
+  }
+}
+
+@media (min-width: 768px) {
+  .content {
+    padding-top: 0;
+    background: transparent;
+    border: none;
+  }
+  .weather {
+    display: flex;
+    justify-content: space-between;
+  }
+  .mainWeather {
+    max-width: 50%;
+  }
+  .imgBox {
+    justify-content: flex-start;
+  }
+  .tempBox {
+    display: flex;
+  }
+  .temp {
+    text-align: center;
+  }
+  .addInfo {
+    border: none;
+    max-width: 50%;
+    margin: 0;
+  }
+  .itemBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .item {
+    text-align: right;
+  }
+  .icon {
+    font-size: 30px;
+  }
+  .data {
+    font-size: 20px;
+  }
+  .name {
+    font-size: 15px;
+    color: #fff;
+  }
+  .botShadow {
+    display: none;
+  }
+}
+
+@media (min-width: 576px) {
+  .contentBox {
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .contentBox {
+    min-width: 700px;
+    max-width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    min-width: 980px;
+  }
+}
+img {
+  max-width: 40%;
+}
+
+.itemBox {
+  display: flex;
+  justify-content: space-between;
+}
+.item {
+  text-align: center;
+}

@@ -1,5 +1,5 @@
 import react from 'react';
 
-const NewCity = () => {};
+const NewCity = (props: any) => {};
 
 export default NewCity;
