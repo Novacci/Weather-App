@@ -4,11 +4,36 @@ import { BsTrashFill } from 'react-icons/bs';
 import { FaSearchLocation } from 'react-icons/fa';
 import { BiArrowBack } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
+import { error } from 'console';
+
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 const Card = () => {
   const [enteredCity, setEnteredCity] = useState('');
   const [cities, setCities] = useState<string[]>([]);
   const [isValid, setIsValid] = useState(true);
+  const [chosenCity, setChosenCity] = useState();
+
+  let lat = '';
+  let lon = '';
+
+  const chosenCityHandler = (event: any) => {
+    setChosenCity(event.target.value);
+  };
+
+  const getCityLocation = () => {
+    fetch(
+      `http://api.openweathermap.org/geo/1.0/direct?q=${chosenCity}&limit=5&appid=${API_KEY}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        lat = data[0].lat;
+        lon = data[0].lon;
+        console.log(lat);
+        console.log(lon);
+      });
+  };
+  console.log(getCityLocation());
 
   useEffect(() => {
     const cities = localStorage.getItem('cities');
@@ -76,9 +101,14 @@ const Card = () => {
             <div className={styles.citiesPosition}>
               {cities.map((city, index) => (
                 <div className={styles.position}>
-                  <span key={index} className={styles.item}>
+                  <button
+                    onClick={chosenCityHandler}
+                    key={index}
+                    className={styles.item}
+                    value={city}
+                  >
                     {city}
-                  </span>
+                  </button>
 
                   <button
                     onClick={() => removeCityHandler(index)}

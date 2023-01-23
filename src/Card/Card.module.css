@@ -1,4 +1,5 @@
 .item {
+  font-size: 2rem;
   color: #000000;
   border: 0px solid #000;
   border-radius: 20px;
@@ -6,6 +7,7 @@
   background-color: lightskyblue;
   width: 800px;
   height: 100px;
+  cursor: pointer;
 }
 .center {
   margin-top: 200px;
