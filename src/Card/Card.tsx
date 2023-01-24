@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { error } from 'console';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
+const WEATHER_KEY = process.env.REACT_APP_WEATHER_KEY;
 
 const Card = () => {
   const [enteredCity, setEnteredCity] = useState('');
@@ -21,19 +22,38 @@ const Card = () => {
     setChosenCity(event.target.value);
   };
 
-  const getCityLocation = () => {
-    fetch(
+  const getCityLocation = async () => {
+    await fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${chosenCity}&limit=5&appid=${API_KEY}`
     )
       .then((response) => response.json())
       .then((data) => {
         lat = data[0].lat;
         lon = data[0].lon;
+
         console.log(lat);
         console.log(lon);
       });
   };
-  console.log(getCityLocation());
+  //reference / value
+  // console.log(getCityLocation());
+  let borewicz = 100.999;
+  Math.trunc(borewicz);
+  console.log(borewicz);
+
+  // let test = '100.999999999';
+  // console.log(Math.trunc(parseFloat(test) * 100) / 100);
+  // lon = data[0].parseFloat(lon).toFixed(2);
+
+  const getWeather = () => {
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_KEY}`
+    )
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  };
+
+  console.log(getWeather());
 
   useEffect(() => {
     const cities = localStorage.getItem('cities');
