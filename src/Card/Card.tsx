@@ -14,6 +14,8 @@ const Card = () => {
   const [cities, setCities] = useState<string[]>([]);
   const [isValid, setIsValid] = useState(true);
   const [chosenCity, setChosenCity] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [weather, setWeather] = useState<any>();
 
   let lat = '';
   let lon = '';
@@ -28,32 +30,32 @@ const Card = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        lat = data[0].lat;
-        lon = data[0].lon;
-
-        console.log(lat);
-        console.log(lon);
+        lat = (Math.trunc(parseFloat(data[0].lat) * 100) / 100).toString();
+        lon = (Math.trunc(parseFloat(data[0].lon) * 100) / 100).toString();
       });
   };
-  //reference / value
-  // console.log(getCityLocation());
-  let borewicz = 100.999;
-  Math.trunc(borewicz);
-  console.log(borewicz);
 
-  // let test = '100.999999999';
-  // console.log(Math.trunc(parseFloat(test) * 100) / 100);
-  // lon = data[0].parseFloat(lon).toFixed(2);
-
-  const getWeather = () => {
-    fetch(
+  const getWeather = async () => {
+    await getCityLocation();
+    await fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_KEY}`
     )
       .then((response) => response.json())
-      .then((data) => console.log(data));
-  };
+      .then((data) => {
+        const weatherData = {
+          name: data.name,
+          description: data.weather[0].main,
+          icon: data.weather[0].icon,
+          temp: data.main.temp,
+          wind: data.wind.speed,
+          humidity: data.main.humidity,
+          pressure: data.main.pressure,
+        };
 
-  console.log(getWeather());
+        // setWeather({ ...weatherData });
+        // console.log(weather);
+      });
+  };
 
   useEffect(() => {
     const cities = localStorage.getItem('cities');
