@@ -13,30 +13,28 @@ const Card = () => {
   const [enteredCity, setEnteredCity] = useState('');
   const [cities, setCities] = useState<string[]>([]);
   const [isValid, setIsValid] = useState(true);
-  const [chosenCity, setChosenCity] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+
+  // const [isLoading, setIsLoading] = useState(true);
   const [weather, setWeather] = useState<any>();
 
   let lat = '';
   let lon = '';
 
-  const chosenCityHandler = (event: any) => {
-    setChosenCity(event.target.value);
-  };
-
-  const getCityLocation = async () => {
+  const getCityLocation = async (city: string) => {
     await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${chosenCity}&limit=5&appid=${API_KEY}`
+      `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${API_KEY}`
     )
       .then((response) => response.json())
       .then((data) => {
         lat = (Math.trunc(parseFloat(data[0].lat) * 100) / 100).toString();
         lon = (Math.trunc(parseFloat(data[0].lon) * 100) / 100).toString();
+        console.log(lat, lon);
+        console.log(city);
       });
   };
 
-  const getWeather = async () => {
-    await getCityLocation();
+  const getWeather = async (event: any) => {
+    await getCityLocation(event.target.value);
     await fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_KEY}`
     )
@@ -51,9 +49,8 @@ const Card = () => {
           humidity: data.main.humidity,
           pressure: data.main.pressure,
         };
-
-        // setWeather({ ...weatherData });
-        // console.log(weather);
+        setWeather(weatherData);
+        console.log(weatherData);
       });
   };
 
@@ -97,6 +94,7 @@ const Card = () => {
           <BiArrowBack />
         </Link>
         <h2>Manage Cities</h2>
+        {weather && <span>{weather.name}</span>}
       </div>
 
       <div className={styles.searchCity}>
@@ -124,7 +122,7 @@ const Card = () => {
               {cities.map((city, index) => (
                 <div className={styles.position}>
                   <button
-                    onClick={chosenCityHandler}
+                    onClick={getWeather}
                     key={index}
                     className={styles.item}
                     value={city}
