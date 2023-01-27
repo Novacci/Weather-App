@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
+import { useState, useEffect, useContext } from 'react';
+import Context from '../store/Context';
 import styles from './Card.module.css';
 import { BsTrashFill } from 'react-icons/bs';
 import { FaSearchLocation } from 'react-icons/fa';
@@ -13,9 +15,10 @@ const Card = () => {
   const [enteredCity, setEnteredCity] = useState('');
   const [cities, setCities] = useState<string[]>([]);
   const [isValid, setIsValid] = useState(true);
-
   // const [isLoading, setIsLoading] = useState(true);
-  const [weather, setWeather] = useState<any>();
+  const { weather, setWeather } = useContext(Context);
+  // const [weather, setWeather] = useState<any>();
+  console.log(weather, setWeather);
 
   let lat = '';
   let lon = '';
@@ -94,7 +97,7 @@ const Card = () => {
           <BiArrowBack />
         </Link>
         <h2>Manage Cities</h2>
-        {weather && <span>{weather.name}</span>}
+        {weather && <span>{weather.icon}</span>}
       </div>
 
       <div className={styles.searchCity}>
