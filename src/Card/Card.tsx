@@ -6,7 +6,9 @@ import { BsTrashFill } from 'react-icons/bs';
 import { FaSearchLocation } from 'react-icons/fa';
 import { BiArrowBack } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { error } from 'console';
+import Loading from '../Loading/Loading';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const WEATHER_KEY = process.env.REACT_APP_WEATHER_KEY;
@@ -17,11 +19,11 @@ const Card = () => {
   const [isValid, setIsValid] = useState(true);
   // const [isLoading, setIsLoading] = useState(true);
   const { weather, setWeather } = useContext(Context);
-  // const [weather, setWeather] = useState<any>();
-  console.log(weather, setWeather);
 
   let lat = '';
   let lon = '';
+
+  const history = useHistory();
 
   const getCityLocation = async (city: string) => {
     await fetch(
@@ -31,8 +33,6 @@ const Card = () => {
       .then((data) => {
         lat = (Math.trunc(parseFloat(data[0].lat) * 100) / 100).toString();
         lon = (Math.trunc(parseFloat(data[0].lon) * 100) / 100).toString();
-        console.log(lat, lon);
-        console.log(city);
       });
   };
 
@@ -53,7 +53,7 @@ const Card = () => {
           pressure: data.main.pressure,
         };
         setWeather(weatherData);
-        console.log(weatherData);
+        history.push('/');
       });
   };
 
@@ -71,6 +71,19 @@ const Card = () => {
   const cityInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEnteredCity(event.target.value);
     setIsValid(true);
+  };
+
+  const addCityOnEnterHandler = (event: any) => {
+    if (enteredCity.trim() === '') {
+      setIsValid(false);
+      return;
+    }
+    if (event.key === 'Enter') {
+      setCities((prevCities) => {
+        return [...prevCities, enteredCity];
+      });
+      setEnteredCity('');
+    }
   };
 
   const addCityHandler = () => {
@@ -97,7 +110,7 @@ const Card = () => {
           <BiArrowBack />
         </Link>
         <h2>Manage Cities</h2>
-        {weather && <span>{weather.icon}</span>}
+        {/* {weather && <span>{weather.icon}</span>} */}
       </div>
 
       <div className={styles.searchCity}>
@@ -108,12 +121,14 @@ const Card = () => {
                 !isValid ? styles.inputIsNotValid : styles.inputIsValid
               }`}
               onChange={cityInputHandler}
+              onKeyDown={addCityOnEnterHandler}
               type="text"
               placeholder="Example: Warsaw"
               value={enteredCity}
             ></input>
             <button
               disabled={!isValid}
+              type="button"
               onClick={addCityHandler}
               className={styles.searchIcon}
             >
@@ -126,6 +141,7 @@ const Card = () => {
                 <div className={styles.position}>
                   <button
                     onClick={getWeather}
+                    type="button"
                     key={index}
                     className={styles.item}
                     value={city}

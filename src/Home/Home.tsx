@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Link } from 'react-router-dom';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { BsThreeDotsVertical } from 'react-icons/bs';
@@ -7,15 +7,28 @@ import { IoMdPin } from 'react-icons/io';
 import { SiRainmeter } from 'react-icons/si';
 import styles from './Home.module.css';
 import { GiWaves } from 'react-icons/gi';
+import Context from '../store/Context';
 
 const Home = () => {
-  let cities = ['Kraków', 'Warszawa', 'Borowiec'];
-  let wind = '20 kmh';
-  let humidity = '94%';
-  let pressure = '990 hPa';
-  let temp = 10;
-  let weatherInfo = 'Clouds';
-  let presentDate = 'Wednesday, 18 January';
+  const { weather } = useContext(Context);
+  let cities = weather.name;
+  let wind = weather.wind;
+  let humidity = weather.humidity;
+  let pressure = weather.pressure;
+  let temp = weather.temp - 273.15;
+  let newTemp = Math.round(temp * 10) / 10;
+  let weatherInfo = weather.description;
+  let icon = weather.icon;
+
+  // React.useEffect(() => {
+
+  // }, []);
+
+  const currentDate = new Date().toLocaleString('en-GB', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
 
   return (
     <div className={styles.container}>
@@ -27,7 +40,7 @@ const Home = () => {
             </Link>
             <div>
               <IoMdPin />
-              {cities[1]}
+              {cities}
             </div>
             <BsThreeDotsVertical />
           </div>
@@ -37,16 +50,16 @@ const Home = () => {
             <div className={styles.weather}>
               <div className={styles.mainWeather}>
                 <div className={styles.imgBox}>
-                  <img src="icons/01d.png" alt="Weather icon" />
+                  <img src={`icons/${icon}.png`} alt="Weather icon" />
                 </div>
                 <div className={styles.tempBox}>
                   <div className={styles.temp}>
                     <h2 className={styles.h2style}>
                       <span className={styles.tempText}>°C</span>
-                      {temp}
+                      {newTemp}
                     </h2>
                     <h3 className={styles.h3style}>{weatherInfo}</h3>
-                    <h6 className={styles.h6style}>{presentDate}</h6>
+                    <h6 className={styles.h6style}>{currentDate}</h6>
                   </div>
                 </div>
               </div>
@@ -56,7 +69,7 @@ const Home = () => {
                     <div className={styles.iconContent}>
                       <BiWind />
                     </div>
-                    <div>{wind}</div>
+                    <div>{wind} m/s</div>
                     <div>Wind</div>
                   </div>
                   <div className={styles.item}>
@@ -64,7 +77,7 @@ const Home = () => {
                       <SiRainmeter />
                     </div>
 
-                    <div>{humidity}</div>
+                    <div>{humidity} %</div>
                     <div>Humidity</div>
                   </div>
                   <div className={styles.item}>
