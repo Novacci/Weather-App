@@ -1,3 +1,10 @@
+.position {
+  margin: 0;
+  position: absolute;
+  left: 45%;
+  top: 45%;
+}
+
 .spinner {
   color: official;
   display: inline-block;

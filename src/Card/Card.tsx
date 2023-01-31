@@ -17,7 +17,7 @@ const Card = () => {
   const [enteredCity, setEnteredCity] = useState('');
   const [cities, setCities] = useState<string[]>([]);
   const [isValid, setIsValid] = useState(true);
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const { weather, setWeather } = useContext(Context);
 
   let lat = '';
@@ -26,23 +26,36 @@ const Card = () => {
   const history = useHistory();
 
   const getCityLocation = async (city: string) => {
+    setIsLoading(true);
     await fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${API_KEY}`
     )
       .then((response) => response.json())
       .then((data) => {
+        if (data.length === 0) {
+          throw new Error('Incorrect City name');
+        }
         lat = (Math.trunc(parseFloat(data[0].lat) * 100) / 100).toString();
         lon = (Math.trunc(parseFloat(data[0].lon) * 100) / 100).toString();
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        console.log('FINAŁ GET CITY LOCATION');
       });
   };
 
   const getWeather = async (event: any) => {
     await getCityLocation(event.target.value);
+    setIsLoading(true);
     await fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_KEY}`
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         const weatherData = {
           name: data.name,
           description: data.weather[0].main,
@@ -52,8 +65,16 @@ const Card = () => {
           humidity: data.main.humidity,
           pressure: data.main.pressure,
         };
+
         setWeather(weatherData);
         history.push('/');
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        console.log('FINAŁ GET CITY WEATHER');
       });
   };
 
@@ -80,7 +101,7 @@ const Card = () => {
     }
     if (event.key === 'Enter') {
       setCities((prevCities) => {
-        return [...prevCities, enteredCity];
+        return [enteredCity, ...prevCities];
       });
       setEnteredCity('');
     }
@@ -92,7 +113,7 @@ const Card = () => {
       return;
     }
     setCities((prevCities) => {
-      return [...prevCities, enteredCity];
+      return [enteredCity, ...prevCities];
     });
     setEnteredCity('');
   };
@@ -104,63 +125,66 @@ const Card = () => {
   };
 
   return (
-    <div className={styles.center}>
-      <div className={styles.headerPosition}>
-        <Link to={'/'} className={styles.arrowIcon}>
-          <BiArrowBack />
-        </Link>
-        <h2>Manage Cities</h2>
-        {/* {weather && <span>{weather.icon}</span>} */}
-      </div>
-
-      <div className={styles.searchCity}>
-        <div className={styles.citiesList}>
-          <div className={styles.searchPosition}>
-            <input
-              className={`${
-                !isValid ? styles.inputIsNotValid : styles.inputIsValid
-              }`}
-              onChange={cityInputHandler}
-              onKeyDown={addCityOnEnterHandler}
-              type="text"
-              placeholder="Example: Warsaw"
-              value={enteredCity}
-            ></input>
-            <button
-              disabled={!isValid}
-              type="button"
-              onClick={addCityHandler}
-              className={styles.searchIcon}
-            >
-              <FaSearchLocation />
-            </button>
+    <div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className={styles.center}>
+          <div className={styles.headerPosition}>
+            <Link to={'/'} className={styles.arrowIcon}>
+              <BiArrowBack />
+            </Link>
+            <h2>Manage Cities</h2>
           </div>
-          <div>
-            <div className={styles.citiesPosition}>
-              {cities.map((city, index) => (
-                <div className={styles.position}>
-                  <button
-                    onClick={getWeather}
-                    type="button"
-                    key={index}
-                    className={styles.item}
-                    value={city}
-                  >
-                    {city}
-                  </button>
+          <div className={styles.searchCity}>
+            <div className={styles.citiesList}>
+              <div className={styles.searchPosition}>
+                <input
+                  className={`${
+                    !isValid ? styles.inputIsNotValid : styles.inputIsValid
+                  }`}
+                  onChange={cityInputHandler}
+                  onKeyDown={addCityOnEnterHandler}
+                  type="text"
+                  placeholder="Example: Warsaw"
+                  value={enteredCity}
+                ></input>
+                <button
+                  disabled={!isValid}
+                  type="button"
+                  onClick={addCityHandler}
+                  className={styles.searchIcon}
+                >
+                  <FaSearchLocation />
+                </button>
+              </div>
+              <div>
+                <div className={styles.citiesPosition}>
+                  {cities.map((city, index) => (
+                    <div key={index} className={styles.position}>
+                      <button
+                        onClick={getWeather}
+                        type="button"
+                        className={styles.item}
+                        value={city}
+                      >
+                        {city}
+                      </button>
 
-                  <button
-                    onClick={() => removeCityHandler(index)}
-                    className={styles.trashIcon}
-                  >
-                    <BsTrashFill />
-                  </button>
+                      <button
+                        onClick={() => removeCityHandler(index)}
+                        className={styles.trashIcon}
+                      >
+                        <BsTrashFill />
+                      </button>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -3,16 +3,17 @@ import styles from './Loading.module.css';
 
 const Loading = () => {
   return (
-    <div className={styles.spinner}>
-      Loading...
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div className={styles.position}>
+      <div className={styles.spinner}>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
   );
 };
