@@ -8,6 +8,7 @@ import { SiRainmeter } from 'react-icons/si';
 import styles from './Home.module.css';
 import { GiWaves } from 'react-icons/gi';
 import Context from '../store/Context';
+import { useHistory } from 'react-router-dom';
 
 const Home = () => {
   const { weather } = useContext(Context);
@@ -20,9 +21,13 @@ const Home = () => {
   let weatherInfo = weather.description;
   let icon = weather.icon;
 
-  // React.useEffect(() => {
+  const history = useHistory();
 
-  // }, []);
+  React.useEffect(() => {
+    if (Object.keys(weather.name).length === 0) {
+      history.push('/cities');
+    }
+  }, []);
 
   const currentDate = new Date().toLocaleString('en-GB', {
     month: 'long',

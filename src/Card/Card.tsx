@@ -17,7 +17,7 @@ const Card = () => {
   const [enteredCity, setEnteredCity] = useState('');
   const [cities, setCities] = useState<string[]>([]);
   const [isValid, setIsValid] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { weather, setWeather } = useContext(Context);
 
   let lat = '';
