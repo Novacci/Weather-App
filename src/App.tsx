@@ -1,6 +1,6 @@
 import { Route } from 'react-router-dom';
 import { useState } from 'react';
-import Card from './Card/Card';
+import Card from './ManageCities/ManageCities';
 import Home from './Home/Home';
 import Context from './store/Context';
 import { WeatherData } from './store/Context';

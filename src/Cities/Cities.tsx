@@ -1,4 +1,4 @@
-import Card from '../Card/Card';
+import Card from '../ManageCities/ManageCities';
 
 const Cities = () => {
   return (

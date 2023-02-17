@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import Context from '../store/Context';
-import styles from './Card.module.css';
+import styles from './ManageCities.module.css';
 import { BsTrashFill } from 'react-icons/bs';
 import { FaSearchLocation } from 'react-icons/fa';
 import { BiArrowBack } from 'react-icons/bi';
